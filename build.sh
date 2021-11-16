@@ -6,7 +6,7 @@ profile=${2} #your user configured using 'aws configure --profile'
 region=${3} #intended deployment region
 libraryversion=${4} #ie 'lib1'
 jarversion=${5} #ie 'aws_cf_simplelambda-1.0-SNAPSHOT'
-stackname=${6} #ie 'SimplevaLambda'
+stackname=${6} #ie 'SimpleJavaLambda'
 
 #to verify choices
 echo bucket         : $bucket
