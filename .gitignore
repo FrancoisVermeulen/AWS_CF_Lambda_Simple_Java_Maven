@@ -1,0 +1,5 @@
+/mybuild.sh
+/template-output.yaml
+/target/*
+/java/lib/*
+/.idea/*

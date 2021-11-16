@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  STACKNAME:
+    Type: String
+  CODEBUCKET:
+    Type: String
+  LIBKEY:
+    Type: String
+  CODEKEY:
+    Type: String
+
+Resources:
+
+  Layer:
+    Type: AWS::Lambda::LayerVersion
+    Properties:
+      Content:
+        S3Bucket: !Ref CODEBUCKET
+        S3Key: !Ref LIBKEY
+      LayerName: !Join [ "-", [ !Ref STACKNAME, "Layer" ] ]
+      LicenseInfo: MIT
+
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+
+  Function:
+    DependsOn:
+      - Layer
+      - Role
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Join [ "-", [ !Ref STACKNAME, "Function" ] ]
+      Handler: org.example.LambdaHandler::handleRequest
+      Runtime: java8
+      Role: !GetAtt Role.Arn
+      Code:
+        S3Bucket: !Ref CODEBUCKET
+        S3Key: !Ref CODEKEY
+
