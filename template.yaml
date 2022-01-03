@@ -48,4 +48,6 @@ Resources:
       Code:
         S3Bucket: !Ref CODEBUCKET
         S3Key: !Ref CODEKEY
+      Layers:
+        - !Ref Layer
 
